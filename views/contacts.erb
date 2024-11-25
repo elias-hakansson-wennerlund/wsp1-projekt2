@@ -1,0 +1,7 @@
+<a href='/contacts/new' class="btn btn-primary" type="button">New contact</a>
+
+<% if @contacts.length == 0 %>
+  <p>No contacts yet</p>
+<% else %>
+  <p>Number of contacts: <%= @contacts.length %></p>
+<% end %>

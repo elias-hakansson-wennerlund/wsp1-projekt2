@@ -2,6 +2,10 @@ Gemfile.lock
 .byebug_history
 db/*.sqlite
 
+.env
+.env.*
+!.env.example
+
 # Mac
 .DS_Store
 .DocumentRevisions-V100
