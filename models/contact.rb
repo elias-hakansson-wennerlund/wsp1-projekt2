@@ -17,10 +17,22 @@ class Contact < BaseModel
         email TEXT,
         birthday DATE,
         note TEXT,
-        created_at DATETIME NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT current_timestamp,
         FOREIGN KEY (user_id) REFERENCES users(id),
         FOREIGN KEY (picture_id) REFERENCES media(id)
       )
     ")
+  end
+
+  def self.insert(params)
+    DB.execute(
+      "INSERT INTO contacts
+      (user_id, picture_id, first_name, last_name, company, phone_number, email, birthday, note)
+      VALUES (?,?,?,?,?,?,?,?,?)",
+      [ params[:user_id], params[:picture_id], params[:first_name], params[:last_name],
+        params[:company], params[:phone_number], params[:email], params[:birthday], params[:note] ]
+    )
+
+    return DB.last_insert_row_id
   end
 end

@@ -10,23 +10,25 @@
 </head>
 <body>
   <header class="navbar navbar-light bg-light px-2">
-    <a href="/" class="navbar-brand">Logo</a>
+    <div class="container">
+      <a href="/" class="navbar-brand">Logo</a>
 
-    <form class="form-inline" action="contacts">
-      <input type="text" name="q" placeholder="Search for a contact" class="form-control">
-    </form>
+      <form class="form-inline" action="contacts">
+        <input type="text" name="q" placeholder="Search for a contact" class="form-control">
+      </form>
 
-    <div>
-      <% if @is_signed_in %>
-        <a class="btn btn-secondary" href="/logout">Log out</a>
-      <% else %>
-        <a class="btn btn-primary" href="/signup">Sign up</a>
-        <a class="btn btn-secondary" href="/login">Login</a>
-      <% end %>
+      <div>
+        <% if @is_signed_in %>
+          <a class="btn btn-secondary" href="/logout">Log out</a>
+        <% else %>
+          <a class="btn btn-primary" href="/signup">Sign up</a>
+          <a class="btn btn-secondary" href="/login">Login</a>
+        <% end %>
+      </div>
     </div>
   </header>
 
-  <div>
+  <div class="my-4">
     <%= yield %>
   </div>
 

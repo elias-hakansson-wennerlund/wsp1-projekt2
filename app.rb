@@ -20,11 +20,6 @@ class App < Sinatra::Base
     end
   end
 
-  get '/test' do
-    @users = User.select_many({})
-    erb(:"test")
-  end
-
   get '/' do
     protected!
     redirect '/contacts'
@@ -32,10 +27,49 @@ class App < Sinatra::Base
 
   get '/contacts' do
     protected!
-
     @contacts = Contact.select_many()
-
     erb(:"contacts")
+  end
+
+  get '/contacts/:id' do |id|
+    protected!
+
+    @contact = Contact.select_one({ id: id, user_id: session[:user_id] })
+
+    if @contact.nil?
+      status 401
+      redirect '/login'
+      return
+    end
+
+    erb(:"contact")
+  end
+
+  get '/contacts/new' do
+    protected!
+    erb(:"new_contact")
+  end
+
+  post '/contacts' do
+    protected!
+
+    user = User.select_one({ id: session[:user_id] })
+
+    # TODO: Validate inputs
+
+    new_contact_id = Contact.insert({
+      user_id: user['id'],
+      picture_id: nil, # TODO
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      company: params[:company],
+      phone_number: params[:phone_number],
+      email: params[:email],
+      birthday: params[:birthday],
+      note: params[:note],
+    })
+
+    redirect "/contacts/#{new_contact_id}"
   end
 
   get '/login' do
