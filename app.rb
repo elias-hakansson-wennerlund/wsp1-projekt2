@@ -1,7 +1,9 @@
 require 'sinatra'
-require_relative './models/user.rb'
-require_relative './models/contact.rb'
 require 'dotenv/load'
+require_relative 'models/user.rb'
+require_relative 'models/contact.rb'
+require_relative 'models/media.rb'
+require_relative 'lib/is_valid_image_mime.rb'
 
 class App < Sinatra::Base
   use Rack::Session::Cookie, key: 'rack.session',
@@ -11,8 +13,7 @@ class App < Sinatra::Base
   helpers do
     def protected!
       @is_signed_in = authorized?
-      return if @is_signed_in
-      redirect '/login'
+      redirect '/login' unless @is_signed_in
     end
 
     def authorized?
@@ -31,6 +32,46 @@ class App < Sinatra::Base
     erb(:"contacts")
   end
 
+  get '/contacts/new' do
+    protected!
+
+    erb(:"new_contact")
+  end
+
+  post '/contacts' do
+    protected!
+
+    user = User.select_one({ id: session[:user_id] })
+
+    picture_id = nil
+
+    if params[:picture] && params[:picture][:tempfile]
+      halt 401, "Invalid file" unless is_valid_image_mime(params[:picture][:type])
+
+      picture_id = Media.upload({
+        mime_type: params[:picture][:type],
+        file_name: params[:picture][:filename],
+        tempfile: params[:picture][:tempfile]
+      })
+    end
+
+    # TODO: Validate inputs
+
+    new_contact_id = Contact.insert({
+      user_id: user['id'],
+      picture_id: picture_id,
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+      company: params[:company],
+      phone_number: params[:phone_number],
+      email: params[:email],
+      birthday: params[:birthday],
+      note: params[:note],
+    })
+
+    redirect "/contacts/#{new_contact_id}"
+  end
+
   get '/contacts/:id' do |id|
     protected!
 
@@ -43,33 +84,6 @@ class App < Sinatra::Base
     end
 
     erb(:"contact")
-  end
-
-  get '/contacts/new' do
-    protected!
-    erb(:"new_contact")
-  end
-
-  post '/contacts' do
-    protected!
-
-    user = User.select_one({ id: session[:user_id] })
-
-    # TODO: Validate inputs
-
-    new_contact_id = Contact.insert({
-      user_id: user['id'],
-      picture_id: nil, # TODO
-      first_name: params[:first_name],
-      last_name: params[:last_name],
-      company: params[:company],
-      phone_number: params[:phone_number],
-      email: params[:email],
-      birthday: params[:birthday],
-      note: params[:note],
-    })
-
-    redirect "/contacts/#{new_contact_id}"
   end
 
   get '/login' do
