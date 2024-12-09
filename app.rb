@@ -28,7 +28,11 @@ class App < Sinatra::Base
 
   get '/contacts' do
     protected!
-    @contacts = Contact.select_many()
+    @contacts = DB.execute('
+      SELECT * FROM contacts
+      INNER JOIN media
+        ON contacts.picture_id = media.id
+      WHERE user_id = ?', [session[:user_id]])
     erb(:"contacts")
   end
 

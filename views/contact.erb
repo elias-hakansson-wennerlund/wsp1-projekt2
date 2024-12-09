@@ -1,6 +1,6 @@
 <% if @contact['picture_id'] %>
   <img
-      src="/public/pfp/<%= @contact['picture_id'] %>"
+      src="/uploads/<%= @contact['picture_id'] %>"
       alt="<%= @contact['first_name'] + ' ' + @contact['last_name'] %>"
   >
 <% end %>
@@ -10,9 +10,11 @@
   <a class="btn btn-danger" href="/contact/<%= @contact['id'] %>/delete">Delete</a>
 </div>
 
-<h1> <%= @contact['first_name'] + " " + @contact['last_name'] %> </h1>
+<h1><%= @contact['first_name'] + " " + @contact['last_name'] %></h1>
 
 <% if @contact['email'] %>
   <span><%= @contact['email'] %></span>
   <a class="btn btn-secondary" href="mailto:<%= @contact['email'] %>">Send email</a>
 <% end %>
+
+

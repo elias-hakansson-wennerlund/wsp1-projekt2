@@ -24,11 +24,7 @@ class Media < BaseModel
   end
 
   def self.upload(params)
-    p params[:mime_type]
-    p params[:file_name]
-    p params[:tempfile]
-
-    file_id = self.insert({
+   file_id = self.insert({
       mime_type: params[:mime_type],
       file_name: params[:file_name],
     })
