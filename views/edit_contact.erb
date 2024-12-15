@@ -1,0 +1,54 @@
+<form action="/contacts/<%= @contact['id'] %>/update" method="POST" enctype="multipart/form-data" class="form">
+  <div class="form-group d-flex flex-column gap-2">
+    <label for="picture-input">Profile picture</label>
+    <img
+      id="profile-picture"
+      style="max-height: 150px; width: min-content; object-fit: cover;<%= @contact['file_name'] ? '' : ' display: none' %>"
+      <% if @contact['file_name'] %>
+      src="/uploads/<%= @contact['file_name'] %>"
+      <% end %>
+    >
+
+      <input name="picture" id="picture-input" type="file" accept="image/png, image/jpeg, image/svg, image/webp" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="first_name">First name</label>
+      <input name="first_name" id="first_name" type="text" class="form-control" required value="<%= @contact['first_name'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">Last name</label>
+      <input name="last_name" id="last_name" type="text" class="form-control" value="<%= @contact['last_name'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="company">Company</label>
+      <input name="company" id="company" type="text" class="form-control" value="<%= @contact['company'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="phone_number">Phone number</label>
+      <input name="phone_number" id="phone_number" type="phone" class="form-control" value="<%= @contact['phone_number'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input name="email" id="email" type="email" class="form-control" value="<%= @contact['email'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="birthday">Birthday</label>
+      <input name="birthday" id="birthday" type="date" class="form-control" value="<%= @contact['birthday'] || '' %>">
+    </div>
+
+    <div class="form-group">
+      <label for="note">Note</label>
+      <textarea name="note" class="form-control"><%= @contact['note'] || '' %></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update contact</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pica/9.0.1/pica.min.js" integrity="sha512-FH8Ofw1HLbwK/UTvlNBxsfICDXYZBr9dPuTh3j17E5n1QZjaucKikW6UwMREFo7Z42AlIigHha3UVwWepr0Ujw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/js/preview-pfp.js"></script>

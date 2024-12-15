@@ -1,8 +1,8 @@
 <form action="/contacts" method="POST" enctype="multipart/form-data" class="form">
-  <div class="form-group">
-    <label for="picture">Profile picture</label>
-    <%# TODO: Preview %>
-    <input name="picture" id="picture" type="file" accept="image/png, image/jpeg, image/svg, image/webp" class="form-control">
+  <div class="form-group d-flex flex-column gap-2">
+    <label for="picture-input">Profile picture</label>
+    <img id="profile-picture" style="max-height: 150px; width: 150px; object-fit: cover; display: none">
+    <input name="picture" id="picture-input" type="file" accept="image/png, image/jpeg, image/svg, image/webp" class="form-control">
   </div>
 
   <div class="form-group">
@@ -42,3 +42,5 @@
 
   <button type="submit" class="btn btn-primary">Create contact</button>
 </form>
+
+<script src="/js/preview-pfp.js"></script>

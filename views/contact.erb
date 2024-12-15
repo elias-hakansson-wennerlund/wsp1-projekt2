@@ -1,20 +1,21 @@
-<% if @contact['picture_id'] %>
+<% if @contact['file_name'] %>
   <img
-      src="/uploads/<%= @contact['picture_id'] %>"
-      alt="<%= @contact['first_name'] + ' ' + @contact['last_name'] %>"
-  >
-<% end %>
+    src="/uploads/<%= @contact['file_name'] %>"
+    alt="<%= @contact['first_name'] + ' ' + @contact['last_name'] %>"
+    style="max-height: 150px;">
+  <% end %>
 
-<div>
-  <a class="btn btn-primary" href="/contacts/<%= @contact['id'] %>/edit">Edit</a>
-  <a class="btn btn-danger" href="/contact/<%= @contact['id'] %>/delete">Delete</a>
-</div>
+  <div>
+    <a class="btn btn-primary" href="/contacts/<%= @contact['id'] %>/edit">Edit</a>
 
-<h1><%= @contact['first_name'] + " " + @contact['last_name'] %></h1>
+    <form class="d-inline" action="/contacts/<%= @contact['id'] %>/delete" method="POST">
+      <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
 
-<% if @contact['email'] %>
-  <span><%= @contact['email'] %></span>
-  <a class="btn btn-secondary" href="mailto:<%= @contact['email'] %>">Send email</a>
-<% end %>
+  <h1><%= @contact['first_name'] + " " + @contact['last_name'] %></h1>
 
-
+  <% if @contact['email'] %>
+    <span><%= @contact['email'] %></span>
+    <a class="btn btn-secondary" href="mailto:<%= @contact['email'] %>">Send email</a>
+  <% end %>
