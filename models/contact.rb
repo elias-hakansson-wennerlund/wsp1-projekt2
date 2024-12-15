@@ -25,6 +25,9 @@ class Contact < BaseModel
   end
 
   def self.insert(params)
+    # Replace empt strings with nil
+    params = params.transform_values { |val| val == "" ? nil : val }
+
     DB.execute(
       "INSERT INTO contacts
       (user_id, picture_id, first_name, last_name, company, phone_number, email, birthday, note)

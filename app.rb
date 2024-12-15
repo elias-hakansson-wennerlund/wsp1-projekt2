@@ -173,11 +173,7 @@ class App < Sinatra::Base
   end
 
   get "/login" do
-    if authorized?
-      redirect "/contacts"
-    else
-      erb(:"login")
-    end
+    erb(:"login")
   end
 
   get "/logout" do
@@ -205,5 +201,28 @@ class App < Sinatra::Base
       status 401
       redirect "/login?error=invalidEmailOrPassword"
     end
+  end
+
+  get "/signup" do
+    erb :signup
+  end
+
+  post "/signup" do
+    if !is_valid_password(params[:password])
+      status 400
+      redirect "/signup?error=invalidPassword"
+    end
+
+    new_user_id = User.insert({
+      email: params[:email],
+      password: params[:password],
+      phone: params[:phone],
+      first_name: params[:first_name],
+      last_name: params[:last_name],
+    })
+
+    session[:user_id] = new_user_id
+
+    redirect "/contacts"
   end
 end

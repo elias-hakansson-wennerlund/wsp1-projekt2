@@ -44,7 +44,7 @@ class BaseModel
       next if value.nil?
 
       query_parts << "#{key} = ?"
-      values << value
+      values << (value == "" ? nil : value)
     end
 
     raise ArgumentError, "No valid parameters to update" if query_parts.empty?

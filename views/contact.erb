@@ -43,6 +43,6 @@
     <p><b>Birthday</b>: <%= @contact['birthday'] %></p>
   <% end %>
 
-  <% unless @contact['note'].nil? || @contact['note'].empty? %>
+  <% if !@contact['note'].nil? %>
     <p><b>Note</b>: <%= @contact['note'] %></p>
   <% end %>
