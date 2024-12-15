@@ -1,3 +1,4 @@
+require "fileutils"
 require_relative "base_model"
 
 class Media < BaseModel
@@ -38,6 +39,7 @@ class Media < BaseModel
     file_name = "#{file_id}.#{file_extension}"
     file_path = File.join("public/uploads", file_name)
 
+    FileUtils.mkdir_p("public/uploads")
     File.open(file_path, "wb") { |file| file.write(params[:tempfile].read) }
 
     self.update(file_id, file_name: file_name)

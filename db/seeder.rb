@@ -1,4 +1,5 @@
 require "bcrypt"
+require "fileutils"
 require_relative "./db.rb"
 require_relative "../models/user.rb"
 require_relative "../models/contact.rb"
@@ -6,15 +7,16 @@ require_relative "../models/media.rb"
 
 class Seeder
   def self.seed!
-    drop_tables!
+    clear_data!
     create_tables!
     populate_tables!
   end
 
-  def self.drop_tables!
+  def self.clear_data!
     User.drop_table!
     Contact.drop_table!
     Media.drop_table!
+    FileUtils.rm_rf("public/uploads")
   end
 
   def self.create_tables!
