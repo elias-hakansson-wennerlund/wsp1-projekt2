@@ -208,6 +208,15 @@ class App < Sinatra::Base
   end
 
   post "/signup" do
+    if params[:email]
+      existing_user = User.select_one(email: params[:email])
+
+      if existing_user
+        status 400
+        redirect "/signup?error=emailInUse"
+      end
+    end
+
     if !is_valid_password(params[:password])
       status 400
       redirect "/signup?error=invalidPassword"

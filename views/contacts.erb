@@ -3,29 +3,31 @@
 <% if @contacts.length == 0 %>
   <p>No contacts yet</p>
 <% else %>
-
   <h2>Contacts</h2>
 
-  <% @contacts.each do |contact| %>
-    <a href="/contacts/<%= contact['id'] %>">
+  <div class="d-flex gap-2">
+    <% @contacts.each do |contact| %>
       <div class="card" style="width: 256px">
-        <% if contact['file_name'] %>
-          <img
-        class="card-img-top"
-        src="/uploads/<%= contact['file_name'] %>"
-        alt="<%= contact['first_name'] + ' ' + (contact['last_name'] || '') %>"
-        style="width: 256px; height: 256px; object-fit: cover;"
-      >
-          <% end %>
+        <a href="/contacts/<%= contact['id'] %>">
 
-          <div class="card-body">
-            <h5 class="card-title"><%= contact['first_name'] + ' ' + (contact['last_name'] || '') %></h5>
-            <a class="btn btn-secondary" href="/contacts/<%= contact['id'] %>/edit">Edit</a>
-            <form action="/contacts/<%= contact['id'] %>/delete" method="POST" class="d-inline">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-          </div>
+          <% if contact['file_name'] %>
+            <img
+              class="card-img-top"
+              src="/uploads/<%= contact['file_name'] %>"
+              alt="<%= contact['first_name'] + ' ' + (contact['last_name'] || '') %>"
+              style="width: 256px; height: 256px; object-fit: cover;"
+            >
+            <% end %>
+
+            <div class="card-body">
+              <h5 class="card-title"><%= contact['first_name'] + ' ' + (contact['last_name'] || '') %></h5>
+              <a class="btn btn-secondary" href="/contacts/<%= contact['id'] %>/edit">Edit</a>
+              <form action="/contacts/<%= contact['id'] %>/delete" method="POST" class="d-inline">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </a>
         </div>
-      </a>
-    <% end %>
+      <% end %>
+    </div>
   <% end %>

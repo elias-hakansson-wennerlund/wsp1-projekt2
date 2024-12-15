@@ -1,5 +1,3 @@
-// https://eu.ui-avatars.com/api/?name=&size=100
-
 const profilePicture = document.querySelector("#profile-picture");
 const pictureInput = document.querySelector("#picture-input");
 
