@@ -15,7 +15,34 @@
 
   <h1><%= @contact['first_name'] + " " + @contact['last_name'] %></h1>
 
-  <% if @contact['email'] %>
-    <span><%= @contact['email'] %></span>
-    <a class="btn btn-secondary" href="mailto:<%= @contact['email'] %>">Send email</a>
+  <% if !@contact['first_name'].nil? %>
+    <p><b>First name</b>: <%= @contact['first_name'] %></p>
+  <% end%>
+
+  <% if !@contact['last_name'].nil? %>
+    <p><b>Last name</b>: <%= @contact['last_name'] %></p>
+  <% end %>
+
+  <% if !@contact['company'].nil? %>
+    <p><b>Company</b>: <%= @contact['company'] %></p>
+  <% end %>
+
+  <% if !@contact['email'].nil? %>
+    <p><b>Email</b>: <%= @contact['email'] %>
+      <a class="btn btn-secondary" href="mailto:<%= @contact['email'] %>">Send email</a>
+    </p>
+  <% end %>
+
+  <% if !@contact['phone_number'].nil? %>
+    <p><b>Phone number</b>: <%= @contact['phone_number'] %>
+      <a class="btn btn-secondary" href="tel:<%= @contact['phone_number'] %>">Call</a>
+    </p>
+  <% end %>
+
+  <% if !@contact['birthday'].nil? %>
+    <p><b>Birthday</b>: <%= @contact['birthday'] %></p>
+  <% end %>
+
+  <% unless @contact['note'].nil? || @contact['note'].empty? %>
+    <p><b>Note</b>: <%= @contact['note'] %></p>
   <% end %>
